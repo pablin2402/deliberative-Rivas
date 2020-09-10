@@ -11,10 +11,6 @@ import logist.task.TaskSet;
 import logist.topology.Topology;
 import logist.topology.Topology.City;
 
-/**
- * An optimal planner for one vehicle.
- */
-@SuppressWarnings("unused")
 public class DeliberativeTemplate implements DeliberativeBehavior {
 
 	enum Algorithm { BFS, ASTAR }
