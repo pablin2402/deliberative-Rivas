@@ -1,14 +1,17 @@
 package deliberative.template.rivas;
 
-import deliberative.template.DeliberativeTemplate;
 import logist.agent.Agent;
 import logist.behavior.DeliberativeBehavior;
+import logist.plan.Action;
 import logist.plan.Plan;
 import logist.simulation.Vehicle;
 import logist.task.Task;
 import logist.task.TaskDistribution;
 import logist.task.TaskSet;
 import logist.topology.Topology;
+
+import java.sql.ClientInfoStatus;
+import java.util.List;
 
 public class RivasDeliberative implements DeliberativeBehavior {
     enum Algorithm { BFS, ASTAR }
@@ -42,21 +45,24 @@ public class RivasDeliberative implements DeliberativeBehavior {
 
     @Override
     public Plan plan(Vehicle vehicle, TaskSet tasks) {
-        Plan plan;
-
-        // Compute the plan with the selected algorithm.
+        State currentState = new State();
+        State s ;
+        BFS bfs = new BFS();
         switch (algorithm) {
             case ASTAR:
                 // ...
-                plan = naivePlan(vehicle, tasks);
+                //plan = naivePlan(vehicle, tasks);
                 break;
             case BFS:
                 // ...
-                plan = naivePlan(vehicle, tasks);
+                s = bfs.getBreathFirstSearch(vehicle, tasks);
                 break;
             default:
                 throw new AssertionError("Should not happen.");
         }
+        List<Action> actions = currentState.getCurrentActions();
+        Plan plan = new Plan(vehicle.getCurrentCity(), actions);
+
         return plan;
     }
 
