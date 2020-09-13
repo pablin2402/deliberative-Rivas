@@ -4,9 +4,16 @@
 	<!-- A list of agents and their behavior classes -->
 	
 	<!-- #### DELIBERATIVE AGENTS ### -->
+
 	<agent name="deliberative-random">
 		<set class-path="build/classes/java/main/deliberative/template"/>
 		<set class-name="deliberative.template.DeliberativeTemplate"/>
+		<set algorithm="BFS"/>
+	</agent>
+
+	<agent name="deliberative-rivas">
+		<set class-path="build/classes/java/main/deliberative/template/rivas"/>
+		<set class-name="deliberative.template.rivas.RivasDeliberative"/>
 		<set algorithm="BFS"/>
 	</agent>
 	

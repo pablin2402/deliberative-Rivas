@@ -2,166 +2,128 @@ package deliberative.template.rivas;
 
 import logist.plan.Action;
 
-import logist.simulation.Vehicle;
 import logist.task.Task;
-import logist.task.TaskSet;
 import logist.topology.Topology.City;
 
 import java.util.*;
 
 public class State {
     private City currentCity;
-    //actions
+    // currentActions
     private List<Action> currentActions;
-    //aceptadas
-    private TaskSet availableTask;
-    //a ser entregadas
-    private TaskSet deliverTo;
-    private Vehicle vehicle;
-    public State (){}
+    // aceptadas
+    private List<Task> availableTask;
+    // a ser entregadas
+    private List<Task> deliverTo;
 
-    public State(City currentCity, List<Action> currentActions, TaskSet currentTask, TaskSet deliverTo) {
+
+    public State(City currentCity, List<Action> currentActions, List<Task> availableTask, List<Task> deliverTo) {
         this.currentCity = currentCity;
         this.currentActions = currentActions;
-        this.availableTask = currentTask;
+        this.availableTask = availableTask;
         this.deliverTo = deliverTo;
     }
 
-    //TODO: need to implement builder pattern
-    public State(Vehicle vehicle, TaskSet taskSet) {
-        this.currentCity = vehicle.getCurrentCity();
-        this.currentActions = Collections.<Action>emptyList();
-        this.availableTask = TaskSet.copyOf(taskSet);
-        this.deliverTo = TaskSet.copyOf(taskSet);
-        this.vehicle = vehicle;
-    }
+    public State(State s) {
+        this.currentCity = s.currentCity;
+        this.availableTask = s.availableTask;
+        this.deliverTo = s.deliverTo;
+        this.currentActions = s.currentActions;
 
+    }
     public City getCurrentCity() {
         return currentCity;
-    }
-
-    public void setCurrentCity(City currentCity) {
-        this.currentCity = currentCity;
     }
 
     public List<Action> getCurrentActions() {
         return currentActions;
     }
-
-    public void setCurrentActions(List<Action> currentActions) {
-        this.currentActions = currentActions;
-    }
-
-    public TaskSet getCurrentTask() {
+    public List<Task> getAvailableTask() {
         return availableTask;
     }
-
-    public void setCurrentTask(TaskSet currentTask) {
-        this.availableTask = currentTask;
-    }
-
-    public TaskSet getDeliverTo() {
+    public List<Task> getDeliverTo() {
         return deliverTo;
     }
-
-    public void setDeliverTo(TaskSet deliverTo) {
-        this.deliverTo = deliverTo;
+    public boolean equals(State s) {
+        return this.currentCity.equals(s.getCurrentCity()) && this.availableTask.equals(s.getAvailableTask())
+                && this.deliverTo.equals(s.getDeliverTo());
     }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        State state = (State) o;
-        return
-                Objects.equals(currentCity, state.currentCity) &&
-                        Objects.equals(currentActions, state.currentActions) &&
-                        Objects.equals(availableTask, state.availableTask) &&
-                        Objects.equals(deliverTo, state.deliverTo) &&
-                        Objects.equals(vehicle, state.vehicle);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(currentCity, currentActions, availableTask, deliverTo, vehicle);
+    private List<Task> pickUpAvailableTasks() {
+        List<Task> availableTasksToBeCollected = new ArrayList<>();
+        this.availableTask.stream()
+                .filter(taskWaitingToBePickUp -> taskWaitingToBePickUp.pickupCity.equals(this.currentCity))
+                .forEach(availableTasksToBeCollected::add);
+        return availableTasksToBeCollected;
     }
 
     private int remainingCapacity() {
-        int weight = 0;
-        for (Task currentTask : deliverTo) {
-            weight += currentTask.weight;
-        }
-        return weight;
+        return this.deliverTo.stream().map(task -> task.weight).reduce(0, Integer::sum);
     }
 
-    protected List<State> generateSuccesors(State currentState, int remainingCapacity) {
-        List<State> generateStates = new LinkedList<>();
-        int capacity;
-        //pick up
-        boolean pickUp=false;
-        for (Task task : availableTask) {
-            capacity = remainingCapacity - currentState.remainingCapacity();
-            if (capacity >= task.weight) {
-                pickUp =true;
-                currentState = currentState.pickup(task);
-
-            }
-        }
-        City currentCity = currentState.getCurrentCity();
-        //delivery
-        for (Task task : deliverTo) {
-            if(task.deliveryCity.equals(currentCity)){
-                currentState = currentState.deliver(task);
-            }
-        }
+    protected List<State> generateSuccesors(State currentState, int carLoadCapacity) {
+        List<State> generateStates = new ArrayList<>();
+        City currentCityForGetNeighbors = currentState.getCurrentCity();
+        currentState = tasksToBeDeliver(currentState, currentCityForGetNeighbors);
         generateStates.add(currentState);
-        return generateStates;
-
-    }
-
-    //lista de los paquetes a recoger
-    private List<Task> pickUpPackages(City currentCity) {
-        List<Task> pickUp = new LinkedList<>();
-        for (Task t : availableTask) {
-            if (t.pickupCity == currentCity) {
-                pickUp.add(t);
+        State state = new State(currentState);
+        int freeCharge;
+        boolean pick = false;
+        for (Task taskToBePickUP : currentState.pickUpAvailableTasks()) {
+            freeCharge = carLoadCapacity - currentState.remainingCapacity();
+            if (freeCharge >= taskToBePickUP.weight) {
+                pick = true;
+                currentState = currentState.pickupTask(taskToBePickUP);
             }
         }
-        return pickUp;
+        State finalCurrentState = currentState;
+        currentCityForGetNeighbors.neighbors().stream()
+                .map(finalCurrentState::moveAction)
+                .forEach(generateStates::add);
+        if (pick) {
+            currentCityForGetNeighbors.neighbors().stream()
+                    .map(state::moveAction)
+                    .forEach(generateStates::add);
+
+        }
+
+        return generateStates;
     }
 
-    protected boolean goalState() { return availableTask.isEmpty() && deliverTo.isEmpty(); }
-    public State move(City c) {
-        List<Action> act = new ArrayList<>();
-        act.add(new Action.Move(c));
-        return new State(c, act,this.availableTask, this.deliverTo);
+    private State tasksToBeDeliver(State currentState, City currentCityForGetNeighbors) {
+        for (Task taskToBeDeliver : currentState.getDeliverTo()) {
+            if (taskToBeDeliver.deliveryCity.equals(currentCityForGetNeighbors)) {
+                currentState = currentState.deliverTo(taskToBeDeliver);
+            }
+        }
+        return currentState;
     }
 
-    public State deliver(Task t) {
-        List<Task> deliverTo = new ArrayList<>();
-        deliverTo.remove(t);
-        List<Action> act = new ArrayList<>();
-        act.add(new Action.Delivery(t));
-        return new State(this.currentCity, act, this.availableTask,this.deliverTo);
+    public State moveAction(City currentCityNeighbors2) {
+        List<Action> listOfActions = new ArrayList<>(this.currentActions);
+        listOfActions.add(new Action.Move(currentCityNeighbors2));
+        return new State(currentCityNeighbors2, listOfActions, this.availableTask, this.deliverTo);
     }
 
-    public State pickup(Task t) {
-        List<Task> newTasks = new ArrayList<>();
-        List<Task> deliverTo = new ArrayList<>();
-        List<Action> act = new ArrayList<>();
-        act.add(new Action.Pickup(t));
-        newTasks.remove(t);
-        deliverTo.add(t);
-        return new State(this.currentCity,act,this.availableTask,this.deliverTo);
+    public State deliverTo(Task taskToDeliver) {
+        List<Task> listOfDeliverTasks = new ArrayList<>(this.deliverTo);
+        listOfDeliverTasks.remove(taskToDeliver);
+        List<Action> listOfActions = new ArrayList<>(this.currentActions);
+        listOfActions.add(new Action.Delivery(taskToDeliver));
+        return new State(this.currentCity,listOfActions ,this.availableTask, listOfDeliverTasks);
     }
+
+    public State pickupTask(Task taskToPickUp) {
+        List<Task> listOfNewTasks = new ArrayList<>(this.availableTask);
+        List<Task> listOfDeliverTasks = new ArrayList<>(this.deliverTo);
+        List<Action> listOfActions = new ArrayList<>(this.currentActions);
+        listOfActions.add(new Action.Pickup(taskToPickUp));
+        listOfNewTasks.remove(taskToPickUp);
+        listOfDeliverTasks.add(taskToPickUp);
+        return new State(this.currentCity, listOfActions,listOfNewTasks, listOfDeliverTasks);
+    }
+    protected boolean goalState() {
+        return availableTask.isEmpty() && deliverTo.isEmpty();
+    }
+
 
 }
