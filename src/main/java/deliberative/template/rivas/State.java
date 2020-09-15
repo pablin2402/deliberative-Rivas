@@ -9,6 +9,7 @@ import java.util.*;
 
 public class State {
     private City currentCity;
+    private double distanceBetweenTwoCities;
     // currentActions
     private List<Action> currentActions;
     // aceptadas
@@ -17,8 +18,9 @@ public class State {
     private List<Task> deliverTo;
 
 
-    public State(City currentCity, List<Action> currentActions, List<Task> availableTask, List<Task> deliverTo) {
+    public State(City currentCity,double distanceBetweenTwoCities,List<Action> currentActions, List<Task> availableTask, List<Task> deliverTo) {
         this.currentCity = currentCity;
+        this.distanceBetweenTwoCities = distanceBetweenTwoCities;
         this.currentActions = currentActions;
         this.availableTask = availableTask;
         this.deliverTo = deliverTo;
@@ -29,12 +31,12 @@ public class State {
         this.availableTask = s.availableTask;
         this.deliverTo = s.deliverTo;
         this.currentActions = s.currentActions;
+        this.distanceBetweenTwoCities = s.distanceBetweenTwoCities;
 
     }
     public City getCurrentCity() {
         return currentCity;
     }
-
     public List<Action> getCurrentActions() {
         return currentActions;
     }
@@ -44,6 +46,7 @@ public class State {
     public List<Task> getDeliverTo() {
         return deliverTo;
     }
+    public double getDistanceBetweenTwoCities() { return distanceBetweenTwoCities; }
     public boolean equals(State s) {
         return this.currentCity.equals(s.getCurrentCity()) && this.availableTask.equals(s.getAvailableTask())
                 && this.deliverTo.equals(s.getDeliverTo());
@@ -55,11 +58,7 @@ public class State {
                 .forEach(availableTasksToBeCollected::add);
         return availableTasksToBeCollected;
     }
-
-    private int remainingCapacity() {
-        return this.deliverTo.stream().map(task -> task.weight).reduce(0, Integer::sum);
-    }
-
+    private int remainingCapacity() { return this.deliverTo.stream().filter(Objects::nonNull).map(task -> task.weight).reduce(0, Integer::sum); }
     protected List<State> generateSuccesors(State currentState, int carLoadCapacity) {
         List<State> generateStates = new ArrayList<>();
         City currentCityForGetNeighbors = currentState.getCurrentCity();
@@ -101,7 +100,7 @@ public class State {
     public State moveAction(City currentCityNeighbors2) {
         List<Action> listOfActions = new ArrayList<>(this.currentActions);
         listOfActions.add(new Action.Move(currentCityNeighbors2));
-        return new State(currentCityNeighbors2, listOfActions, this.availableTask, this.deliverTo);
+        return new State(currentCityNeighbors2,this.currentCity.distanceTo(currentCityNeighbors2) ,listOfActions, this.availableTask, this.deliverTo);
     }
 
     public State deliverTo(Task taskToDeliver) {
@@ -109,7 +108,7 @@ public class State {
         listOfDeliverTasks.remove(taskToDeliver);
         List<Action> listOfActions = new ArrayList<>(this.currentActions);
         listOfActions.add(new Action.Delivery(taskToDeliver));
-        return new State(this.currentCity,listOfActions ,this.availableTask, listOfDeliverTasks);
+        return new State(this.currentCity,this.distanceBetweenTwoCities,listOfActions ,this.availableTask, listOfDeliverTasks);
     }
 
     public State pickupTask(Task taskToPickUp) {
@@ -119,7 +118,7 @@ public class State {
         listOfActions.add(new Action.Pickup(taskToPickUp));
         listOfNewTasks.remove(taskToPickUp);
         listOfDeliverTasks.add(taskToPickUp);
-        return new State(this.currentCity, listOfActions,listOfNewTasks, listOfDeliverTasks);
+        return new State(this.currentCity,this.distanceBetweenTwoCities ,listOfActions,listOfNewTasks, listOfDeliverTasks);
     }
     protected boolean goalState() {
         return availableTask.isEmpty() && deliverTo.isEmpty();

@@ -8,11 +8,11 @@ import logist.topology.Topology.City;
 import java.util.*;
 
 public class BFS {
-    private State initState(Vehicle vehicle, TaskSet taskSet) {
+    protected State initState(Vehicle vehicle, TaskSet taskSet) {
         City city = vehicle.getCurrentCity();
         List<Task> tasksWaitingToBePickUp = new ArrayList<>(taskSet);
         List<Task> tasksWaitingToBeDeliver = new ArrayList<>(vehicle.getCurrentTasks());
-        return new State(city, Collections.emptyList(), tasksWaitingToBePickUp, tasksWaitingToBeDeliver);
+        return new State(city,0.0 ,Collections.emptyList(), tasksWaitingToBePickUp, tasksWaitingToBeDeliver);
     }
     protected State getBreathFirstSearch(Vehicle vehicle, TaskSet taskSet) {
         State firstNode = initState(vehicle, taskSet);

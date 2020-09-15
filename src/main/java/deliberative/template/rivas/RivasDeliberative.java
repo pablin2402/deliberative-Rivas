@@ -34,8 +34,10 @@ public class RivasDeliberative implements DeliberativeBehavior {
     public Plan plan(Vehicle vehicle, TaskSet tasks) {
         State state = null;
         BFS bfs = new BFS();
+        AStar aStar = new AStar();
         switch (algorithm) {
             case ASTAR:
+                state = aStar.aStarAlgorithm(vehicle, tasks);
                 break;
             case BFS:
                 state = bfs.getBreathFirstSearch(vehicle, tasks);
