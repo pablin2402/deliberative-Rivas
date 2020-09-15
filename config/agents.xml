@@ -5,10 +5,10 @@
 	
 	<!-- #### DELIBERATIVE AGENTS ### -->
 
-	<agent name="deliberative-random">
-		<set class-path="build/classes/java/main/deliberative/template"/>
-		<set class-name="deliberative.template.DeliberativeTemplate"/>
-		<set algorithm="BFS"/>
+	<agent name="deliberative-bfs">
+		<set class-path="build/classes/java/main/deliberative/template/rivas"/>
+		<set class-name="deliberative.template.rivas.RivasDeliberative"/>
+		<set algorithm="ASTAR"/>
 	</agent>
 
 	<agent name="deliberative-rivas">
