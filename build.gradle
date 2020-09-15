@@ -32,4 +32,4 @@ application {
     mainClassName = 'logist.LogistPlatform'
 }
 
-run.setArgsString('-a config/agents.xml config/deliberative.xml deliberative-bfs deliberative-rivas')
+run.setArgsString('-a config/agents.xml config/deliberative.xml deliberative-bfs deliberative-rivas deliberative-rivas2')

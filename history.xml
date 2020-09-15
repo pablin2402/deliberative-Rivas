@@ -8,6 +8,9 @@
 		<agent name="deliberative-rivas">
 			<vehicle name="Rivas car´s"/>
 		</agent>
+		<agent name="deliberative-rivas2">
+			<vehicle name="Rivas car´s 2"/>
+		</agent>
 	</agents>
 	<rounds>
 		<round id="1">
@@ -22,85 +25,137 @@
 				<task id="7" pickup="Basel" delivery="Neuchâtel" weight="3" reward="67378"/>
 				<task id="8" pickup="Neuchâtel" delivery="Genève" weight="3" reward="69417"/>
 				<task id="9" pickup="Basel" delivery="Fribourg" weight="3" reward="69417"/>
+				<task id="10" pickup="Neuchâtel" delivery="Luzern" weight="3" reward="55146"/>
+				<task id="11" pickup="Fribourg" delivery="Basel" weight="3" reward="69417"/>
+				<task id="12" pickup="St-Gallen" delivery="Thun" weight="3" reward="40875"/>
+				<task id="13" pickup="Zürich" delivery="Thun" weight="3" reward="65340"/>
+				<task id="14" pickup="Zürich" delivery="Fribourg" weight="3" reward="63301"/>
 			</tasks>
 			<events>
-				<event id="0" time="0" vehicle="Vehicle 1" move="Fribourg"/>
+				<event id="0" time="0" vehicle="Vehicle 1" move="Thun"/>
 				<event id="1" time="0" vehicle="Rivas car´s" pickup="2"/>
-				<event id="2" time="299999997" vehicle="Rivas car´s" pickup="5"/>
-				<event id="3" time="599999983" vehicle="Rivas car´s" move="Lausanne"/>
-				<event id="4" time="1111111070" vehicle="Vehicle 1" move="Bern"/>
-				<event id="5" time="1666666595" vehicle="Vehicle 1" move="Aarau"/>
-				<event id="6" time="2266666564" vehicle="Rivas car´s" pickup="4"/>
-				<event id="7" time="2566666547" vehicle="Rivas car´s" move="Neuchâtel"/>
-				<event id="8" time="2888888752" vehicle="Vehicle 1" pickup="0"/>
-				<event id="9" time="3188888733" vehicle="Vehicle 1" move="Bern"/>
-				<event id="10" time="3677777594" vehicle="Rivas car´s" pickup="8"/>
-				<event id="11" time="3977777578" vehicle="Rivas car´s" move="Bern"/>
-				<event id="12" time="4411110891" vehicle="Vehicle 1" move="Fribourg"/>
-				<event id="13" time="4644444211" vehicle="Rivas car´s" move="Basel"/>
-				<event id="14" time="4966666417" vehicle="Vehicle 1" move="Lausanne"/>
-				<event id="15" time="6077777467" vehicle="Vehicle 1" move="Genève"/>
-				<event id="16" time="6199999682" vehicle="Rivas car´s" deliver="5"/>
-				<event id="17" time="6499999668" vehicle="Rivas car´s" pickup="3"/>
-				<event id="18" time="6799999650" vehicle="Rivas car´s" pickup="7"/>
-				<event id="19" time="7077777416" vehicle="Vehicle 1" deliver="0"/>
-				<event id="20" time="7099999636" vehicle="Rivas car´s" pickup="9"/>
-				<event id="21" time="7377777397" vehicle="Vehicle 1" move="Lausanne"/>
-				<event id="22" time="7399999615" vehicle="Rivas car´s" move="Bern"/>
-				<event id="23" time="8377777342" vehicle="Vehicle 1" move="Fribourg"/>
-				<event id="24" time="8955555083" vehicle="Rivas car´s" move="Fribourg"/>
-				<event id="25" time="9488888389" vehicle="Vehicle 1" move="Bern"/>
-				<event id="26" time="9511110608" vehicle="Rivas car´s" deliver="9"/>
-				<event id="27" time="9811110588" vehicle="Rivas car´s" move="Bern"/>
-				<event id="28" time="10044443910" vehicle="Vehicle 1" move="Aarau"/>
-				<event id="29" time="10366666115" vehicle="Rivas car´s" move="Neuchâtel"/>
-				<event id="30" time="11033332742" vehicle="Rivas car´s" deliver="7"/>
-				<event id="31" time="11266666067" vehicle="Vehicle 1" move="Zürich"/>
-				<event id="32" time="11333332725" vehicle="Rivas car´s" move="Lausanne"/>
-				<event id="33" time="11933332694" vehicle="Vehicle 1" pickup="1"/>
-				<event id="34" time="12233332676" vehicle="Vehicle 1" move="Aarau"/>
-				<event id="35" time="12444443772" vehicle="Rivas car´s" move="Genève"/>
-				<event id="36" time="12899999307" vehicle="Vehicle 1" move="Bern"/>
-				<event id="37" time="13444443717" vehicle="Rivas car´s" deliver="2"/>
-				<event id="38" time="13744443704" vehicle="Rivas car´s" deliver="8"/>
-				<event id="39" time="14044443690" vehicle="Rivas car´s" move="Lausanne"/>
-				<event id="40" time="14122221468" vehicle="Vehicle 1" move="Thun"/>
-				<event id="41" time="14566665890" vehicle="Vehicle 1" move="Sion"/>
-				<event id="42" time="15044443635" vehicle="Rivas car´s" move="Fribourg"/>
-				<event id="43" time="15899999149" vehicle="Vehicle 1" deliver="1"/>
-				<event id="44" time="16155554683" vehicle="Rivas car´s" move="Bern"/>
-				<event id="45" time="16199999131" vehicle="Vehicle 1" move="Thun"/>
-				<event id="46" time="16711110204" vehicle="Rivas car´s" move="Basel"/>
-				<event id="47" time="17533332387" vehicle="Vehicle 1" move="Bern"/>
-				<event id="48" time="17977776808" vehicle="Vehicle 1" move="Aarau"/>
-				<event id="49" time="18266665675" vehicle="Rivas car´s" move="Zürich"/>
-				<event id="50" time="19199998957" vehicle="Vehicle 1" move="Luzern"/>
-				<event id="51" time="19599998932" vehicle="Rivas car´s" move="St-Gallen"/>
-				<event id="52" time="20199998900" vehicle="Vehicle 1" pickup="6"/>
-				<event id="53" time="20499998884" vehicle="Vehicle 1" move="Zürich"/>
-				<event id="54" time="20933332189" vehicle="Rivas car´s" deliver="3"/>
-				<event id="55" time="21233332172" vehicle="Rivas car´s" deliver="4"/>
-				<event id="56" time="21277776619" vehicle="Vehicle 1" move="Basel"/>
-				<event id="57" time="21533332155" vehicle="Rivas car´s" move="Zürich"/>
-				<event id="58" time="22611109871" vehicle="Vehicle 1" deliver="6"/>
-				<event id="59" time="22866665406" vehicle="Rivas car´s" move="Luzern"/>
+				<event id="2" time="0" vehicle="Rivas car´s 2" pickup="5"/>
+				<event id="3" time="299999995" vehicle="Rivas car´s" move="Thun"/>
+				<event id="4" time="299999995" vehicle="Rivas car´s 2" move="Thun"/>
+				<event id="5" time="1333333278" vehicle="Vehicle 1" move="Bern"/>
+				<event id="6" time="1633333264" vehicle="Rivas car´s" move="Bern"/>
+				<event id="7" time="1633333264" vehicle="Rivas car´s 2" move="Bern"/>
+				<event id="8" time="1777777702" vehicle="Vehicle 1" move="Aarau"/>
+				<event id="9" time="2077777687" vehicle="Rivas car´s" move="Basel"/>
+				<event id="10" time="2077777687" vehicle="Rivas car´s 2" move="Basel"/>
+				<event id="11" time="2999999852" vehicle="Vehicle 1" pickup="0"/>
+				<event id="12" time="3299999834" vehicle="Vehicle 1" move="Bern"/>
+				<event id="13" time="3633333150" vehicle="Rivas car´s" pickup="3"/>
+				<event id="14" time="3633333150" vehicle="Rivas car´s 2" deliver="5"/>
+				<event id="15" time="3933333132" vehicle="Rivas car´s" pickup="7"/>
+				<event id="16" time="3933333132" vehicle="Rivas car´s 2" pickup="9"/>
+				<event id="17" time="4233333116" vehicle="Rivas car´s" move="Zürich"/>
+				<event id="18" time="4233333116" vehicle="Rivas car´s 2" move="Zürich"/>
+				<event id="19" time="4522221988" vehicle="Vehicle 1" move="Fribourg"/>
+				<event id="20" time="5077777514" vehicle="Vehicle 1" move="Lausanne"/>
+				<event id="21" time="5566666373" vehicle="Rivas car´s" pickup="1"/>
+				<event id="22" time="5566666373" vehicle="Rivas car´s 2" pickup="13"/>
+				<event id="23" time="5866666354" vehicle="Rivas car´s" pickup="14"/>
+				<event id="24" time="5866666354" vehicle="Rivas car´s 2" move="Aarau"/>
+				<event id="25" time="6166666334" vehicle="Rivas car´s" move="Aarau"/>
+				<event id="26" time="6188888557" vehicle="Vehicle 1" move="Genève"/>
+				<event id="27" time="6533332977" vehicle="Rivas car´s 2" move="Bern"/>
+				<event id="28" time="6833332959" vehicle="Rivas car´s" move="Bern"/>
+				<event id="29" time="7188888495" vehicle="Vehicle 1" deliver="0"/>
+				<event id="30" time="7488888475" vehicle="Vehicle 1" move="Lausanne"/>
+				<event id="31" time="7755555127" vehicle="Rivas car´s 2" move="Fribourg"/>
+				<event id="32" time="8055555111" vehicle="Rivas car´s" move="Fribourg"/>
+				<event id="33" time="8311110653" vehicle="Rivas car´s 2" deliver="9"/>
+				<event id="34" time="8488888422" vehicle="Vehicle 1" move="Fribourg"/>
+				<event id="35" time="8611110634" vehicle="Rivas car´s 2" move="Bern"/>
+				<event id="36" time="8611110635" vehicle="Rivas car´s" deliver="14"/>
+				<event id="37" time="8911110615" vehicle="Rivas car´s" move="Bern"/>
+				<event id="38" time="9166666157" vehicle="Rivas car´s 2" move="Neuchâtel"/>
+				<event id="39" time="9466666138" vehicle="Rivas car´s" move="Neuchâtel"/>
+				<event id="40" time="9599999466" vehicle="Vehicle 1" move="Bern"/>
+				<event id="41" time="9833332786" vehicle="Rivas car´s 2" pickup="8"/>
+				<event id="42" time="10133332768" vehicle="Rivas car´s" deliver="7"/>
+				<event id="43" time="10133332768" vehicle="Rivas car´s 2" pickup="10"/>
+				<event id="44" time="10155554991" vehicle="Vehicle 1" move="Aarau"/>
+				<event id="45" time="10433332749" vehicle="Rivas car´s" move="Bern"/>
+				<event id="46" time="10433332749" vehicle="Rivas car´s 2" move="Lausanne"/>
+				<event id="47" time="11099999377" vehicle="Rivas car´s" move="Basel"/>
+				<event id="48" time="11377777143" vehicle="Vehicle 1" move="Zürich"/>
+				<event id="49" time="11544443795" vehicle="Rivas car´s 2" pickup="4"/>
+				<event id="50" time="11844443775" vehicle="Rivas car´s 2" move="Genève"/>
+				<event id="51" time="12044443765" vehicle="Vehicle 1" move="Luzern"/>
+				<event id="52" time="12655554836" vehicle="Rivas car´s" move="Zürich"/>
+				<event id="53" time="12822221497" vehicle="Vehicle 1" pickup="6"/>
+				<event id="54" time="12844443715" vehicle="Rivas car´s 2" deliver="8"/>
+				<event id="55" time="13122221480" vehicle="Vehicle 1" move="Zürich"/>
+				<event id="56" time="13144443697" vehicle="Rivas car´s 2" move="Lausanne"/>
+				<event id="57" time="13899999210" vehicle="Vehicle 1" move="Basel"/>
+				<event id="58" time="13988888087" vehicle="Rivas car´s" move="St-Gallen"/>
+				<event id="59" time="14144443634" vehicle="Rivas car´s 2" move="Neuchâtel"/>
+				<event id="60" time="15233332471" vehicle="Vehicle 1" deliver="6"/>
+				<event id="61" time="15255554689" vehicle="Rivas car´s 2" move="Bern"/>
+				<event id="62" time="15322221352" vehicle="Rivas car´s" deliver="3"/>
+				<event id="63" time="15533332455" vehicle="Vehicle 1" move="Bern"/>
+				<event id="64" time="15622221335" vehicle="Rivas car´s" pickup="12"/>
+				<event id="65" time="15922221316" vehicle="Rivas car´s" move="Zürich"/>
+				<event id="66" time="15922221317" vehicle="Rivas car´s 2" move="Basel"/>
+				<event id="67" time="17088887924" vehicle="Vehicle 1" move="Fribourg"/>
+				<event id="68" time="17255554579" vehicle="Rivas car´s" move="Aarau"/>
+				<event id="69" time="17477776793" vehicle="Rivas car´s 2" move="Zürich"/>
+				<event id="70" time="17644443455" vehicle="Vehicle 1" pickup="11"/>
+				<event id="71" time="17922221214" vehicle="Rivas car´s" move="Bern"/>
+				<event id="72" time="17944443439" vehicle="Vehicle 1" move="Bern"/>
+				<event id="73" time="18499998961" vehicle="Vehicle 1" move="Basel"/>
+				<event id="74" time="18811110054" vehicle="Rivas car´s 2" move="Luzern"/>
+				<event id="75" time="19144443370" vehicle="Rivas car´s" move="Thun"/>
+				<event id="76" time="19588887789" vehicle="Rivas car´s" deliver="12"/>
+				<event id="77" time="19588887792" vehicle="Rivas car´s 2" deliver="10"/>
+				<event id="78" time="19888887771" vehicle="Rivas car´s" move="Bern"/>
+				<event id="79" time="19888887774" vehicle="Rivas car´s 2" move="Zürich"/>
+				<event id="80" time="20055554432" vehicle="Vehicle 1" deliver="11"/>
+				<event id="81" time="20333332190" vehicle="Rivas car´s" move="Fribourg"/>
+				<event id="82" time="20355554413" vehicle="Vehicle 1" move="Zürich"/>
+				<event id="83" time="20666665509" vehicle="Rivas car´s 2" move="St-Gallen"/>
+				<event id="84" time="20888887717" vehicle="Rivas car´s" move="Lausanne"/>
+				<event id="85" time="21688887671" vehicle="Vehicle 1" move="St-Gallen"/>
+				<event id="86" time="21999998762" vehicle="Rivas car´s" move="Genève"/>
+				<event id="87" time="21999998766" vehicle="Rivas car´s 2" deliver="4"/>
+				<event id="88" time="22299998749" vehicle="Rivas car´s 2" move="Zürich"/>
+				<event id="89" time="22999998699" vehicle="Rivas car´s" deliver="2"/>
+				<event id="90" time="23299998684" vehicle="Rivas car´s" move="Lausanne"/>
+				<event id="91" time="23633332004" vehicle="Rivas car´s 2" move="Luzern"/>
+				<event id="92" time="24299998627" vehicle="Rivas car´s" move="Sion"/>
+				<event id="93" time="24411109736" vehicle="Rivas car´s 2" move="Zürich"/>
+				<event id="94" time="25188887466" vehicle="Rivas car´s 2" move="Aarau"/>
+				<event id="95" time="25855554094" vehicle="Rivas car´s 2" move="Bern"/>
+				<event id="96" time="25966665195" vehicle="Rivas car´s" deliver="1"/>
+				<event id="97" time="26266665176" vehicle="Rivas car´s" move="Thun"/>
+				<event id="98" time="27077776244" vehicle="Rivas car´s 2" move="Thun"/>
+				<event id="99" time="27522220660" vehicle="Rivas car´s 2" deliver="13"/>
 			</events>
 		</round>
 	</rounds>
 	<statistics>
 		<stat rank="1" agent="deliberative-rivas">
-			<total-tasks value="7"/>
-			<total-distance value="1750.0"/>
-			<total-cost value="8750"/>
-			<total-reward value="390097"/>
-			<total-profit value="381347"/>
+			<total-tasks value="6"/>
+			<total-distance value="2160.0"/>
+			<total-cost value="10800"/>
+			<total-reward value="330875"/>
+			<total-profit value="320075"/>
 		</stat>
-		<stat rank="2" agent="deliberative-bfs">
+		<stat rank="2" agent="deliberative-rivas2">
+			<total-tasks value="6"/>
+			<total-distance value="2180.0"/>
+			<total-cost value="10900"/>
+			<total-reward value="324759"/>
+			<total-profit value="313859"/>
+		</stat>
+		<stat rank="3" agent="deliberative-bfs">
 			<total-tasks value="3"/>
-			<total-distance value="1900.0"/>
-			<total-cost value="9500"/>
-			<total-reward value="147089"/>
-			<total-profit value="137589"/>
+			<total-distance value="1910.0"/>
+			<total-cost value="9550"/>
+			<total-reward value="175631"/>
+			<total-profit value="166081"/>
 		</stat>
 	</statistics>
 </history>

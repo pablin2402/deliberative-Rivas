@@ -75,13 +75,24 @@ Número de paquetes 5, BFS vs Agente Aleatorio
 
 Número de paquetes 15, A\* vs Agente Aleatorio
 ![Image of Example 3](https://github.com/pablin2402/deliberative-Rivas/blob/master/images/ASTAR.png)
+
 ## Conclusión 
 En conclusión el A* trabaja mucho mejor que el BFS ya que el BFS se limita a ir al primer estado que se encuentra mientras el ASTAR que es muy similar sigue
 la heurística implementada que dependiendo si está bien diseñada se pueden recoger una infinidad de paquetes.Con la heurística implementa filtra una lista con las tareas por recoger y las tareas por entregar y ve la menor distancia.
 Con una computadora con un procesador INTEL CORE I7 de 8va generación y 16 gb de RAM fácilmente se puede hacer BFS para 6 paquetes. En la siguiente tabla se puede apreciar el tiempo de ejecución, reward per km (recompensa final, no la más alta).
-   ![Image of Example 3](https://github.com/pablin2402/deliberative-Rivas/blob/master/images/COMPARACION.png)
 
-## Ejecucion
+![Image of Example 4](https://github.com/pablin2402/deliberative-Rivas/blob/master/images/COMPARACION.png)
+
+Se ejecutaron simulaciones con 3 agentes deliberativos  A*
+dando los siguientes resultados:
+
+![Image of Example 5](https://github.com/pablin2402/deliberative-Rivas/blob/master/images/3ASTAR.png)
+
+Se pueden ver que dos agentes terminaron casi empatando y otro que no tuvo el mejor rendimiento, los tres fueron situados en ciudades aledañas, es decir una alado de la otra, dos de ellos en la misma ciudad, lo que me da a pensar es que los dos que estaban en la misma ciudad 
+se peleaban por los paquetes ya que empezaban con el mismo plan así que dependiendo quien llegaba primero (aquí llamo a la suerte por así decirlo) conseguía los paquetes y perjudicaba al otro auto que practicamente estaba alado, lo que seriamente lo perjudico al principio ya que tenía que 
+re calcular la mejor opción. El tercero recogía la _sobra_ por así decirlo, suena mal pero no es así ya que aunque tardando más, porque tenía que re calcular la estrategia no era perjudicado porque otro auto lo deje sin paquete por nada de conseguir este, simplemente calculaba su mejor opción 
+y llegaba sin problemas a ella(a menos que otro auto llegue primero, cosa que puede pasar y que pasa).
+## Ejecución
 
 Para ejecutar este proyecto basta con ejecutar el siguiente comando:
 

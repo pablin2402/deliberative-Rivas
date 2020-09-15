@@ -8,10 +8,15 @@
 	<agent name="deliberative-bfs">
 		<set class-path="build/classes/java/main/deliberative/template"/>
 		<set class-name="deliberative.template.DeliberativeTemplate"/>
-		<set algorithm="BFS"/>
+		<set algorithm="ASTAR"/>
 	</agent>
 
 	<agent name="deliberative-rivas">
+		<set class-path="build/classes/java/main/deliberative/template/rivas"/>
+		<set class-name="deliberative.template.rivas.RivasDeliberative"/>
+		<set algorithm="ASTAR"/>
+	</agent>
+	<agent name="deliberative-rivas2">
 		<set class-path="build/classes/java/main/deliberative/template/rivas"/>
 		<set class-name="deliberative.template.rivas.RivasDeliberative"/>
 		<set algorithm="ASTAR"/>
