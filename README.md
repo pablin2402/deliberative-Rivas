@@ -6,11 +6,11 @@
 
 #### BFS
 
-El algoritmo BFS fue relativamente sencillo de implementar ya que se tenía experiencia con otros proyectos. Practicamente se siguio el pseudocódigo provisto en clases y ya. Algo a notar es que cuando se configura logist para proveer más de 6 paquetes el algoritmo tarda demasiado, y aquí saco la conclusión de que se generan ciclos que hacen que se visite una ciudad varias veces.
+El algoritmo BFS fue relativamente sencillo de implementar ya que se tenía experiencia con otros proyectos. Prácticamente se siguió el pseudocódigo provisto en clases y ya. Algo a notar es que cuando se configura _logist_ para proveer más de 6 paquetes el algoritmo tarda demasiado, y aquí saco la conclusión de que se generan ciclos que hacen que se visite una ciudad varias veces.
 
 #### InitState
 
-Basicamente lo que hace este método es inicializar el estado, añadiendo las tareas por recorrer, donde está el vehículo, y la carga que tiene el vehículo
+Básicamente lo que hace este método es inicializar el estado, añadiendo las tareas por recorrer, donde está el vehículo, y la carga que tiene el vehículo
 
 ### AStar Class
 
@@ -21,6 +21,10 @@ siguiendo:
 f(n) = g(n) + h(n)
 donde g(n) es la distancia para llegar a un nodo y h es la heurística menos el costo desde ese nodo hasta la meta.
 Esto hace que se visite a los estados con la menor distancia posible.
+
+La heurística que se implementó ve la ciudad actual y crea una colección SET con con las ciudades de entrega y recogida, ve la menor distancia entre la ciudad actual a la vecina y almacena la de menor
+costo. Devolviendo la distancia mínima entre una ciudad que tiene una tarea por recoger o entregar. Lo que hace que no vaya envano a una ciudad que no corresponda y mejorando el rendimiento de está, pudiendo con más de 15 paquetes
+con un procesador intel core I7 de Octava Generación.
 
 ### State
 
@@ -37,9 +41,25 @@ Los atributos definidos en estados son :
     private List<Task> deliverTo;
 ```
 
-donde se define la ciudad actual que es donde el vehículo esta, la distancia entre la ciudad actual y otra ciudad vecina, currentactions que almacena las acciones, availableTask son los paquetes que todavía no han sido recogidos y deliverTo son los paquetes que ya se recogieron y están por ser entregados.
+Donde se define en **currentCity** la ciudad donde el vehículo está, **distanceBetweenTwoCities**la distancia entre la ciudad actual y otra ciudad vecina, **currentActions** que almacena las acciones como ser _(MOVE, PICKUP y DELIVER)_, **availableTask** es una lista donde se almacenan los paquetes que todavía no han sido recogidos y **deliverTo** es otra lista que almacena los paquetes que ya se recogieron y están por ser entregados.
 
 #### generateSuccessors
+
+Este método genera los hijos del estado actual, recibe como parámetros al estado y la capacidad de kilogramos que el automóvil puede llevar.
+Genera los estados a los que el estado actual pueda acceder. Lo que se hace es que si el auto está en una ciudad donde se debe entregar un paquete que tiene el carro, este lo entrega
+y verifica si existe un paquete para recoger, este recogerá todos los paquetes que el auto pueda llevar, entonces habrán ocasiones en las que se dejarán algunos paquetes.
+Para moverse a recoger dicho paquete jugamos con un boolean, con este se controla si se recogió o no, en caso de que si, se va a la ubicación correspondiente.
+Para que exista modularidad y el método no sea muy extenso se crearon 3 métodos adicionales: **MOVE, DELIVER y PICK UP**. Lo que hace **MOVE** es añadir la opción de moverse a la lista de acciones y se actualiza el estado.
+**DELIVER** juega con dos listas: acciones y deliverto, añade la acción de deliver y elimina la tarea de deliverto porque está ya se entrego.**PICK UP** juega con las tres listas, elimina la tarea 
+de la lista de tareas disponibles por recoger, añade la tarea a la lista de deliverto y también añade la acción de Pick Up a la lista de acciones y actualiza el estado.  
+
+##### remainingCapacity
+
+Lo que hace este método es bastante simple, recorre la lista de **deliverTo** sumando la carga de cada paquete, esto con el fin de no exceder con el peso que el auto puede cargar.
+
+#### goalState
+
+Verifica que las listas **deliverTo** y **availableTask** queden  vacías, en el caso que si devuelve true. Este método se usa en el algoritmo BFS y A\*.
 
 # Resultados
 
@@ -55,6 +75,11 @@ Número de paquetes 5, BFS vs Agente Aleatorio
 
 Número de paquetes 15, A\* vs Agente Aleatorio
 ![Image of Example 3](https://github.com/pablin2402/deliberative-Rivas/blob/master/images/ASTAR.png)
+## Conclusión 
+En conclusión el A* trabaja mucho mejor que el BFS ya que el BFS se limita a ir al primer estado que se encuentra mientras el ASTAR que es muy similar sigue
+la heurística implementada que dependiendo si está bien diseñada se pueden recoger una infinidad de paquetes.Con la heurística implementa filtra una lista con las tareas por recoger y las tareas por entregar y ve la menor distancia.
+Con una computadora con un procesador INTEL CORE I7 de 8va generación y 16 gb de RAM fácilmente se puede hacer BFS para 6 paquetes. En la siguiente tabla se puede apreciar el tiempo de ejecución, reward per km (recompensa final, no la más alta).
+   ![Image of Example 3](https://github.com/pablin2402/deliberative-Rivas/blob/master/images/COMPARACION.png)
 
 ## Ejecucion
 

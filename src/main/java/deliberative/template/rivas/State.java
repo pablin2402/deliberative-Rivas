@@ -47,6 +47,18 @@ public class State {
         return deliverTo;
     }
     public double getDistanceBetweenTwoCities() { return distanceBetweenTwoCities; }
+
+    @Override
+    public String toString() {
+        return "State{" +
+                "currentCity=" + currentCity +
+                ", distanceBetweenTwoCities=" + distanceBetweenTwoCities +
+                ", currentActions=" + currentActions +
+                ", availableTask=" + availableTask +
+                ", deliverTo=" + deliverTo +
+                '}';
+    }
+
     public boolean equals(State s) {
         return this.currentCity.equals(s.getCurrentCity()) && this.availableTask.equals(s.getAvailableTask())
                 && this.deliverTo.equals(s.getDeliverTo());
@@ -59,6 +71,7 @@ public class State {
         return availableTasksToBeCollected;
     }
     private int remainingCapacity() { return this.deliverTo.stream().filter(Objects::nonNull).map(task -> task.weight).reduce(0, Integer::sum); }
+
     protected List<State> generateSuccesors(State currentState, int carLoadCapacity) {
         List<State> generateStates = new ArrayList<>();
         City currentCityForGetNeighbors = currentState.getCurrentCity();
@@ -84,7 +97,6 @@ public class State {
                     .forEach(generateStates::add);
 
         }
-
         return generateStates;
     }
 

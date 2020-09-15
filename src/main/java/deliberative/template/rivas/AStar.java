@@ -29,8 +29,7 @@ public class AStar {
                 }
                 if (!currentAction) {
                     cost.add(firstElement);
-                    estimationOfTheCheapestNodeToArriveAtN(q,
-                            firstElement.generateSuccesors(firstElement, vehicle.capacity()));
+                    q =estimationOfTheCheapestNodeToArriveAtN(q,firstElement.generateSuccesors(firstElement, vehicle.capacity()));
                 }
             }
         } while (!q.isEmpty());
@@ -39,7 +38,7 @@ public class AStar {
 
     private static List<State> estimationOfTheCheapestNodeToArriveAtN(List<State> q, List<State> generateSuccessors) {
         q.addAll(generateSuccessors);
-        Collections.sort(q, new Sort());
+        q.sort(new Sort());
         return q;
     }
 
@@ -48,7 +47,6 @@ public class AStar {
         City currentCity = s.getCurrentCity();
         Set<City> citiesToVisit = new HashSet<>();
         citiesToVisit.add(currentCity);
-
         Set<City> cities = new HashSet<>();
         s.getAvailableTask().stream().map(task -> task.deliveryCity).forEach(cities::add);
         s.getDeliverTo().stream().map(task -> task.pickupCity).forEach(cities::add);
@@ -74,7 +72,6 @@ public class AStar {
             minD += minimunDistance;
         }
         return minD;
-
     }
 
     static Map<State, Double> heuristicTable = new HashMap<>();
